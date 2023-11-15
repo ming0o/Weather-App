@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+        integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="title">
+            <div class="date"></div>
+            <div class="temp_main"></div>
+            <div class="temp_per"></div>
+        </div>
+        <br><br>
+        <div class="hourly-container scrollbar js-horizontal-scroll">
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+            <div class="hourly-card">
+                <img id="icon" style="width: 60px; height: auto;" />
+                <div class="time" style="font-size: 10pt;"></div>
+                <div class="temperature" style="font-size: 17pt;"></div>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="sunrise">
+                <div class="sunrise-title">
+                    <img src="../resources/icon/sun.horizon 1.png" alt="sunrise">
+                    <div style="margin: auto;">일출/일몰</div>
+                </div>
+                <div class="sun-up">
+                    <img src="../resources/icon/sunrise 1.png" alt="sunrise">
+                    <div class="sunrise-time"></div>
+                </div>
+                <div class="sun-down">
+                    <img src="../resources/icon/sunset 1.png" alt="sunset">
+                    <div class="sunset-time"></div>
+                </div>
+            </div>
+            <div class="range">
+                <div class="range-title">
+                    <img src="../resources/icon/chart.line.uptrend 1.png" alt="chart"
+                        style="width: 40px; height: auto;">
+                    <div style="font-size: 17px; margin: auto;">일교차</div>
+                </div>
+                <br>
+                <div class="graph">
+                    <div class="temp_diff"></div>
+                    <div class="today-graph">
+                        <div class="ab-text">최대</div>
+                        <div class="temp_max"></div>
+                    </div>
+                    <div class="aver-graph">
+                        <div class="ab-text">최저</div>
+                        <div class="temp_min"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="weekend-weather">
+            <div class="weekend-title">WEEKEND</div>
+        </div>
+        <br>
+        <div class="air-pollution">
+            <div class="ap-title">
+                <img src="../resources/icon/sun.png" style="width: 40px; height: auto;">
+                미세먼지 농도
+            </div>
+            <div class="ap-wrap">
+                <div class="fn-dust">
+                    <div class="title-1">미세먼지</div>
+                    <div class="fn-dust-content">
+                        <div class="fn-dust-fig"></div>
+                        <div class="fn-dust-guide"></div>
+                    </div>
+                </div>
+                <div class="uf-dust">
+                    <div class="title-2">초미세먼지</div>
+                    <div class="uf-dust-content">
+                        <div class="uf-dust-fig"></div>
+                        <div class="uf-dust-guide"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+
+    <script>
+        $(function () {
+            $("#footer").load("footer/footer.html", function () {
+                const icons = document.querySelectorAll(".footer-icon");
+
+                icons.forEach(icon => {
+                    icon.addEventListener("mouseover", function () {
+                        this.style.cursor = "pointer";
+                    });
+
+                    icon.addEventListener("click", function () {
+                        const iconText = this.querySelector("span").innerText.trim();
+
+                        let url = 'https://api.openweathermap.org/data/2.5/weather?lat=37.3799&lon=126.8032&units=metric&appid=06f05613456ab0b6102aa2d6216acac9';
+                        $.getJSON(url, function (data) {
+                            let weather = data.weather[0].main;
+
+                            switch (iconText) {
+                                case "Daily":
+                                    alert("Daily is clicked!");
+                                    break;
+                                case "Map":
+                                    window.location.href = "map/mappage.html";
+                                    break;
+                                case "Playlist":
+                                    navigateToPlaylistPage(weather);
+                                    break;
+                                case "Settings":
+                                    window.location.href = "settings.html";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                    });
+                });
+            });
+        });
+        function navigateToPlaylistPage(weather) {
+            let playlistPage;
+
+            switch (weather) {
+                case 'Rain':
+                case 'Drizzle':
+                case 'Thunderstorm':
+                    playlistPage = "playlist/playlistpage_rainy.html";
+                    break;
+                case 'Sun':
+                case 'Clear':
+                    playlistPage = "playlist/playlistpage_sunny.html";
+                    break;
+                case 'Snow':
+                    playlistPage = "playlist/playlistpage_snowy.html";
+                    break;
+                case 'Smoke':
+                case 'Haze':
+                case 'Dust':
+                case 'Fog':
+                case 'Mist':
+                case 'Ash':
+                case 'Sand':
+                case 'Squall':
+                case 'Tornado':
+                case 'Clouds':
+                    playlistPage = "playlist/playlistpage_cloudy.html";
+                    break;
+                default:
+                    playlistPage = "playlist/playlistpage_sunny.html";
+                    break;
+            }
+
+            if (playlistPage) {
+                window.location.href = playlistPage;
+            }
+        }
+        
+        function getToday() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = ("0" + (1 + date.getMonth())).slice(-2);
+            var day = ("0" + date.getDate()).slice(-2);
+
+            return year + "." + month + "." + day;
+        }
+        $('.date').text(getToday());
+
+        let url = 'https://api.openweathermap.org/data/2.5/weather?lat=37.3799&lon=126.8032&units=metric&appid=06f05613456ab0b6102aa2d6216acac9'
+        $.getJSON(url, function (data) {
+            console.log(data)
+
+            let weather = data.weather[0].main
+            let temp = Math.round(data.main.temp)
+            let temp_max = Math.round(data.main.temp_max)
+            let temp_min = Math.round(data.main.temp_min)
+            let temp_per = Math.round(data.main.feels_like)
+            let sunrise = data.sys.sunrise
+            let sunset = data.sys.sunset
+
+            $('.temp_main').text(temp + '°')
+            $('.temp_per').text('(' + temp_per + '°' + ')')
+            $('.temp_max').text(temp_max + '°')
+            $('.temp_min').text(temp_min + '°')
+
+            let temp_diff = temp_max - temp_min;
+            $('.temp_diff').text(temp_diff + '°');
+
+            let sunriseTime = moment(sunrise * 1000).format('HH:mm');
+            let sunsetTime = moment(sunset * 1000).format('HH:mm');
+            $('.sunrise-time').text(sunriseTime);
+            $('.sunset-time').text(sunsetTime);
+
+
+            function updateBackground(weather) {
+                var backgroundUrl;
+
+                switch (weather) {
+                    case 'Rain':
+                    case 'Drizzle':
+                    case 'Thunderstorm':
+                        backgroundUrl = '/resources/images/rainy.png';
+                        break;
+                    case 'Sun':
+                    case 'Clear':
+                        backgroundUrl = '/resources/images/sunny.png';
+                        break;
+                    case 'Snow':
+                        backgroundUrl = '/resources/images/snowy.png';
+                        break;
+                    case 'Smoke':
+                    case 'Haze':
+                    case 'Dust':
+                    case 'Fog':
+                    case 'Mist':
+                    case 'Ash':
+                    case 'Sand':
+                    case 'Squall':
+                    case 'Tornado':
+                    case 'Clouds':
+                        backgroundUrl = '/resources/images/cloudy.png';
+                        break;
+                    default:
+                        backgroundUrl = '/resources/images/sunny.png';
+                        break;
+                }
+
+                // 배경 이미지 설정
+                $('body').css('background', 'url(' + backgroundUrl + ') center/cover rgba(0, 0, 0, 0.5)');
+            }
+            updateBackground(weather);
+        })
+
+        let urlForecast = 'https://api.openweathermap.org/data/2.5/forecast?lat=37.3799&lon=126.8032&units=metric&appid=06f05613456ab0b6102aa2d6216acac9'
+        $.getJSON(urlForecast, function (data) {
+            console.log(data)
+
+            let dailyForecasts = data.list.filter((forecast, index) => index % 8 === 0 && index < 40);
+            const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+            let $weekendWeather = $('.weekend-weather');
+
+            dailyForecasts.forEach((dailyData, index) => {
+                let temperatureMin = Math.round(dailyData.main.temp_min);
+                let temperatureMax = Math.round(dailyData.main.temp_max);
+                let icon = dailyData.weather[0].icon;
+                let dayIndex = new Date(dailyData.dt * 1000).getDay();
+
+                let $dayElement = $('<div class="weekend-day">');
+                $dayElement.append(`<div class="day-name">${daysOfWeek[dayIndex]}</div>`);
+
+                let iconURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+                $dayElement.append(`<div class="weather-icon"><img src="${iconURL}" alt="Weather Icon"></div>`);
+
+                let temperatureString = `${temperatureMin}°/${temperatureMax}°`;
+                $dayElement.append(`<div class="week-temperature">${temperatureString}</div>`);
+
+                $weekendWeather.append($dayElement);
+            });
+
+            data.list.forEach((hourlyData, index) => {
+
+                let temperature = Math.round(hourlyData.main.temp);
+                let icon = hourlyData.weather[0].icon;
+                let hour = new Date(hourlyData.dt * 1000).getHours();
+
+                let $hourlyCard = $('.hourly-card').eq(index);
+                $hourlyCard.find('.time').text(`${hour}:00`);
+                $hourlyCard.find('.temperature').text(`${temperature}°C`);
+
+                let iconURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+                $hourlyCard.find('img').attr('src', iconURL);
+            });
+        })
+
+        let urlAir = 'https://api.openweathermap.org/data/2.5/air_pollution?lat=37.3799&lon=126.8032&units=metric&appid=06f05613456ab0b6102aa2d6216acac9'
+        $.getJSON(urlAir, function (data) {
+            let fineDustValue = Math.round(data.list[0].components.pm10);
+            let ultraFineDustValue = Math.round(data.list[0].components.pm2_5);
+
+            // 미세먼지 값 채우기
+            $('.fn-dust-fig').text(fineDustValue);
+            if (fineDustValue <= 30) {
+                $('.fn-dust-guide').text('좋음');
+            } else if (fineDustValue <= 80) {
+                $('.fn-dust-guide').text('보통');
+            } else if (fineDustValue <= 150) {
+                $('.fn-dust-guide').text('나쁨');
+            } else {
+                $('.fn-dust-guide').text('매우 나쁨');
+            }
+
+            // 초미세먼지 값 채우기
+            $('.uf-dust-fig').text(ultraFineDustValue);
+            if (ultraFineDustValue <= 15) {
+                $('.uf-dust-guide').text('좋음');
+            } else if (ultraFineDustValue <= 35) {
+                $('.uf-dust-guide').text('보통');
+            } else if (ultraFineDustValue <= 75) {
+                $('.uf-dust-guide').text('나쁨');
+            } else {
+                $('.uf-dust-guide').text('매우 나쁨');
+            }
+
+        })
+
+
+        window.addEventListener("scroll", function () {
+            var scrollY = window.scrollY;
+            var windowHeight = window.innerHeight;
+            var documentHeight = document.body.offsetHeight;
+            if (scrollY + windowHeight >= documentHeight) {
+            }
+        });
+    </script>
+</body>
+
+</html>

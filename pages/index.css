@@ -1,0 +1,267 @@
+body {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 100px;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    color:#ffffff;
+}
+
+.wrap {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.title {
+    text-align: right;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    margin-top: 60px;
+}
+
+.temp_main {
+    font-size: 50pt;
+}
+.date,
+.temp_per {
+    font-size: 17pt;
+}
+
+.sunrise-time,
+.sunset-time{
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto;
+}
+.normal-text{
+    font-size: 23px;
+}
+.ab-text{
+    font-size: 17px;
+}
+
+.little-text {
+    font-size: 13px;
+}
+img{
+    width: 50px;
+    height: auto;
+}
+
+.hourly-container {
+    display: flex;
+    overflow-x: scroll;
+    gap: 25px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    padding: 10px 20px 0 20px;
+    white-space: nowrap;
+    
+}
+.hourly-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.hourly-container::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.hourly-container::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+
+.hourly-card {
+    display: inline-block;
+    text-align: center;
+    padding-bottom: 10px;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sunrise,
+.range {
+    display: flex;
+    width: 47%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    flex-direction: column;
+    padding: 15px 0 15px 0;
+}
+
+.graph .ab-text {
+    display: flex;
+    margin: auto;
+}
+
+.graph .temp_diff {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 17%;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.temp_min,
+.temp_max {
+    display: flex;
+    margin: auto;
+    font-size: 17px;
+}
+
+
+.sunrise-title,
+.range-title {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+    align-items: center; 
+    padding-bottom: 10px; 
+}
+
+.sun-up,
+.sun-down {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    margin-top: 10px; 
+    font-weight: bold;
+}
+
+.sunrise-title img,
+.sun-up img,
+.sun-down img,
+.range img {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.today-graph,
+.aver-graph {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    margin-bottom: 1px;
+}
+
+.weekend-weather {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    padding-top: 10px;
+}
+
+.weekend-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 0 10px 20px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* 여기에 구분선 추가 */
+}
+
+.weekend-day {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 40px 0 40px;
+    font-size: 17px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    justify-content: space-between;
+}
+
+.air-pollution {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    padding-top: 10px;
+}
+
+.ap-title {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+    align-items: center; 
+    padding: 5px 0 5px 20px;
+    font-size: 17px;
+    color:rgba(255, 255, 255);
+    gap: 10px;
+}
+
+.ap-wrap {
+    display: flex;
+    flex-direction: row;
+    padding: 15px 20px 15px 20px;
+}
+
+.fn-dust {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.uf-dust {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.fn-dust-content,
+.uf-dust-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.fn-dust-fig,
+.uf-dust-fig{
+    display: flex;
+    margin-top: 7px;
+}
+
+.fn-dust-guide{
+    display: flex;
+    font-weight: bold;
+    font-size: 23px;
+    margin-right: 20px;
+}
+
+.uf-dust-guide{
+    display: flex;
+    font-weight: bold;
+    font-size: 23px;
+}
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    height: 70px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-icon img {
+    width: auto;
+    height: 30px;
+    filter: invert(100%);
+}

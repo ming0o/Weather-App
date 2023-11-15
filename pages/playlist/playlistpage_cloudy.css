@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #aBaBaB;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    margin: 70px auto;
+    width: 70%;
+    height: 70vh;
+    border-radius: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.title {
+    color: white;
+    font-size: 20pt;
+    margin-top: 20pt;
+}
+
+.separator {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-top: 20px;
+}
+
+.cd {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cd::before {
+    content: '';
+    position: relative;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 50%;
+    background: none; /* 테두리의 배경색 */
+}
+
+.cd img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mask-image: radial-gradient(circle at center, transparent 50%, black 30%);
+    -webkit-mask-image: radial-gradient(circle at center, transparent 20%, black 0%);
+    transition: transform 0.5s ease;
+}
+
+.infinite_rotating_logo {
+    animation: rotate_image 10s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+@keyframes rotate_image {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.play-pause img{
+    margin: 0 20px 0 20px;
+    cursor: pointer;
+}
+iframe { 
+    display: none;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    height: 70px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-icon img {
+    width: auto;
+    height: 30px;
+    filter: invert(100%);
+}

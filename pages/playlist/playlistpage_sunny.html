@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="playlistpage_sunny.css">
+</head>
+
+<body>
+    <div class="card">
+        <div class="title">SUNNY PLAYLIST</div>
+        <div class="separator"></div>
+        <br>
+        <div class="cd">
+            <img src="../../resources/images/sun-pl-pic.png" alt="CD Image">
+        </div>
+        <br><br><br>
+        <div class="play-pause">
+            <img src="../../resources/icon/backward 1.png" style="width: 25px; height: auto;">
+            <img src="../../resources/icon/play 3.png" id="playButtonSunny" style="width: 35px; height: auto;">
+            <img src="../../resources/icon/backward 2.png" style="width: 25px; height: auto;">
+        </div>
+    </div>
+    <iframe width="300" height="315" src="https://www.youtube.com/embed/8MnaiwUpRV4?si=AUSzXpvK8PlGRRSF"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen class="video-frame"></iframe>
+    <div id="footer"></div>
+
+    <script>
+        $(function () {
+            $("#footer").load("../footer/footer.html", function () {
+                const icons = document.querySelectorAll(".footer-icon");
+
+                icons.forEach(icon => {
+                    icon.addEventListener("mouseover", function () {
+                        this.style.cursor = "pointer";
+                    });
+
+                    icon.addEventListener("click", function () {
+                        const iconText = this.querySelector("span").innerText.trim();
+                        switch (iconText) {
+                            case "Daily":
+                                window.location.href = "../index.html";
+                                break;
+                            case "Map":
+                                window.location.href = "../map/mappage.html";
+                                break;
+                            case "Playlist":
+                                alert("Playlist is clicked!");
+                                break;
+                            case "Settings":
+                                window.location.href = "../settings.html";
+                                break;
+                            default:
+                                break;
+                        }
+                    });
+                });
+            });
+            let isPlaying = false;
+            const videoFrame = $('.video-frame')[0];
+
+            $("#playButtonSunny").on("click", function () {
+                if (!isPlaying) {
+                    $(".cd img").addClass("infinite_rotating_logo");
+                    videoFrame.src += "&autoplay=1"; // 비디오의 URL에 autoplay 파라미터 추가
+                    isPlaying = true;
+                } else {
+                    $(".cd img").removeClass("infinite_rotating_logo");
+                    videoFrame.src = videoFrame.src.replace("&autoplay=1", ""); // 재생 중지시 autoplay 파라미터 제거
+                    isPlaying = false;
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+        integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="mappage.css">
+</head>
+
+<body>
+    <div id="footer"></div>
+    <script>
+        $(function () {
+            $("#footer").load("../footer/footer.html", function () {
+                const icons = document.querySelectorAll(".footer-icon");
+
+                icons.forEach(icon => {
+                    icon.addEventListener("mouseover", function () {
+                        this.style.cursor = "pointer";
+                    });
+
+                    icon.addEventListener("click", function () {
+                        const iconText = this.querySelector("span").innerText.trim();
+
+                        let url = 'https://api.openweathermap.org/data/2.5/weather?lat=37.3799&lon=126.8032&units=metric&appid=06f05613456ab0b6102aa2d6216acac9';
+                        $.getJSON(url, function (data) {
+                            let weather = data.weather[0].main;
+
+                            switch (iconText) {
+                                case "Daily":
+                                    window.location.href = "../index.html";
+                                    break;
+                                case "Map":
+                                    alert("Map is clicked!");
+                                    break;
+                                case "Playlist":
+                                    navigateToPlaylistPage(weather);
+                                    break;
+                                case "Settings":
+                                    window.location.href = "../settings.html";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                    });
+                });
+            });
+        });
+        function navigateToPlaylistPage(weather) {
+            let playlistPage;
+
+            switch (weather) {
+                case 'Rain':
+                case 'Drizzle':
+                case 'Thunderstorm':
+                    playlistPage = "../playlist/playlistpage_rainy.html";
+                    break;
+                case 'Sun':
+                case 'Clear':
+                    playlistPage = "../playlist/playlistpage_sunny.html";
+                    break;
+                case 'Snow':
+                    playlistPage = "../playlist/playlistpage_snowy.html";
+                    break;
+                case 'Smoke':
+                case 'Haze':
+                case 'Dust':
+                case 'Fog':
+                case 'Mist':
+                case 'Ash':
+                case 'Sand':
+                case 'Squall':
+                case 'Tornado':
+                case 'Clouds':
+                    playlistPage = "../playlist/playlistpage_cloudy.html";
+                    break;
+                default:
+                    playlistPage = "../playlist/playlistpage_sunny.html";
+                    break;
+            }
+
+            if (playlistPage) {
+                window.location.href = playlistPage;
+            }
+        }
+    </script>
+</body>
+
+</html>
